@@ -1,0 +1,41 @@
+﻿<form asp-action="SubmitClaim" method="post" enctype="multipart/form-data">
+    <div>
+        <label>Lecturer Name:</label>
+        <input asp-for="LecturerName" class="form-control" />
+        <span asp-validation-for="LecturerName" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Hours Worked:</label>
+        <input id="hoursWorked" asp-for="HoursWorked" class="form-control" />
+        <span asp-validation-for="HoursWorked" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Hourly Rate:</label>
+        <input id="hourlyRate" asp-for="HourlyRate" class="form-control" />
+        <span asp-validation-for="HourlyRate" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Total Payment:</label>
+        <input id="totalPayment" class="form-control" readonly />
+    </div>
+    <div>
+        <label>Upload Document:</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#hoursWorked, #hourlyRate').on('input', function () {
+            const hours = parseFloat($('#hoursWorked').val()) || 0;
+            const rate = parseFloat($('#hourlyRate').val()) || 0;
+            $('#totalPayment').val((hours * rate).toFixed(2));
+        });
+    });
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
